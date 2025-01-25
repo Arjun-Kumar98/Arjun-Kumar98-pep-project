@@ -7,4 +7,7 @@ public class SocialMediaDAO {
        
         return null;
 }
+public int findUser(String userName){
+    return 0;
+}
 }
