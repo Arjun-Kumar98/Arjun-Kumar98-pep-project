@@ -19,12 +19,10 @@ public SocialMediaService(SocialMediaDAO socialmediaDAO){
 }
 
 public Account addAccount(Account account){
-   logger.info("I am called here ");
 String username = account.getUsername();
 String password = account.getPassword();
 if(username.length()>=1&&password.length()>=4){
 String checker= socialmediaDAO.findUser(username);
-logger.info("I am called here ");
 if(checker==null){
 return socialmediaDAO.registerUser(account);
 }
