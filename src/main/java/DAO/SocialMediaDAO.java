@@ -47,7 +47,20 @@ public String findUser(String userName){
 }
 
 public Account loginUser(Account account){
-
+Connection connection = ConnectionUtil.getConnection();
+try{
+String sql = "select account_id from account where username = ? and password = ?";
+PreparedStatement preparedStatement = connection.prepareStatement(sql);
+preparedStatement.setString(1,account.getUsername());
+preparedStatement.setString(2,account.getPassword());
+ResultSet rs = preparedStatement.executeQuery();
+while(rs.next()){
+Integer accountId = rs.getInt("account_id");
+//return accountId;
+return new Account(accountId,account.getUsername(),account.getPassword());
+}}catch(SQLException e){
+System.out.println(e.getMessage());
+}
 return null;
 }
 

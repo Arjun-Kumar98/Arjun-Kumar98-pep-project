@@ -29,4 +29,8 @@ return socialmediaDAO.registerUser(account);
 }
 return null;
 }
+
+public Account accountLogin(Account account){
+   return socialmediaDAO.loginUser(account);
+}
 }
