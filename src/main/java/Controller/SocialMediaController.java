@@ -15,6 +15,10 @@ import Service.SocialMediaService;
  */
 public class SocialMediaController {
  SocialMediaService socialMediaService;
+
+ public SocialMediaController(){
+    socialMediaService = new SocialMediaService();
+ }
     /**
      * In order for the test cases to work, you will need to write the endpoints in the startAPI() method, as the test
      * suite must receive a Javalin object from this method.
@@ -22,7 +26,7 @@ public class SocialMediaController {
      */
     public Javalin startAPI() {
         Javalin app = Javalin.create();
-       app.post("/register",this::registerUserHandler);
+       app.post("/register",this::registerAccount);
         app.get("example-endpoint", this::exampleHandler);
 
         return app;
@@ -36,10 +40,10 @@ public class SocialMediaController {
         context.json("sample text");
     }
 
-   private void registerUserHandler(Context ctx) throws JsonProcessingException {
-    
+   private void registerAccount(Context ctx) throws JsonProcessingException {
+     String jsonString = ctx.body();
     ObjectMapper mapper = new ObjectMapper();
-    Account account = mapper.readValue(ctx.body(),Account.class);
+    Account account = mapper.readValue(jsonString,Account.class);
    Account registeredAccount = socialMediaService.addAccount(account);
    if(registeredAccount == null){
         ctx.status(400);
