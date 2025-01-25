@@ -28,22 +28,22 @@ return new Account(generated_account_id,account.getUsername(),account.getPasswor
 return null;
 
 }
-public int findUser(String userName){
+public String findUser(String userName){
     Connection connection = ConnectionUtil.getConnection();
     try{
-   String sql = "select count(username) from account where username=?";
+   String sql = "select username from account where username=?";
    PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
   ResultSet rs = preparedStatement.executeQuery();
- int counter=0;
-// while(rs.next()){
-//     counter = rs.getInt();
-// }
-return counter;
+ 
+ while(rs.next()){
+     String user = rs.getString("username");
+     return user;
+ }
     }catch(SQLException e){
         System.out.println(e.getMessage());
     }
-    return 0;
+    return null;
 }
 
 public Account loginUser(Account account){
