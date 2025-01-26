@@ -120,8 +120,35 @@ try{
 return messageList;
 }
 
-public void deleteMessage(Integer messageId){
-
+public Message retrieveMessageById(Integer messageId){
+    Connection connection = ConnectionUtil.getConnection();
+    try{
+        String sql = "select * from message where message_id=?";
+        PreparedStatement prepStmt = connection.prepareStatement(sql);
+        prepStmt.setInt(1,messageId);
+        ResultSet rs = prepStmt.executeQuery();
+        if(rs.next()){
+            return new Message(rs.getInt("message_id"),rs.getInt("posted_by"),rs.getString("message_text"),rs.getLong("time_posted_epoch"));
+        }
+    }catch(SQLException e){
+        System.out.println(e.getMessage());
+    }
+    return null;
+}
+public Message deleteMessage(Integer messageId){
+Connection connection = ConnectionUtil.getConnection();
+try{
+    String sql = "delete from message where message_id=?";
+    PreparedStatement prepStmt = connection.prepareStatement(sql);
+    prepStmt.setInt(1,messageId);
+    ResultSet rs = prepStmt.executeQuery();
+    if(rs.next()){
+        return new Message(rs.getInt("message_id"),rs.getInt("posted_by"),rs.getString("message_text"),rs.getLong("time_posted_epoch"));
+    }
+}catch(SQLException e){
+    System.out.println(e.getMessage());
+}
+return null;
 }
 
 public Message updateMessage(Message message){

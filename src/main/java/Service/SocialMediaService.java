@@ -50,4 +50,13 @@ public Message createMessage(Message message){
 public List<Message> fetchAllMessages(){
    return socialmediaDAO.retrieveMessage();
 }
+
+public Message fetchMessageById(int messageId){
+   return socialmediaDAO.retrieveMessageById(messageId);
+}
+
+public Message deleteMessageById(Integer messageId){
+   return socialmediaDAO.deleteMessage(messageId);
+}
+
 }
