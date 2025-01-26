@@ -102,7 +102,7 @@ public Message createMessage(Message message){
     }
     
 
-public List<Message> retrieveMessage(){
+public List<Message> retrieveAllMessages(){
 Connection connection = ConnectionUtil.getConnection();
 List<Message> messageList = new ArrayList<Message>();
 try{
@@ -134,7 +134,7 @@ public Message retrieveMessageById(Integer messageId){
     }
     return null;
 }
-public void deleteMessage(Integer messageId){
+public void deleteMessageById(Integer messageId){
 Connection connection = ConnectionUtil.getConnection();
 try{
     String sql = "delete from message where message_id=?";
@@ -146,7 +146,7 @@ try{
 }
 }
 
-public int updateMessage(Integer messageId, String messageTxt){
+public int updateMessageById(Integer messageId, String messageTxt){
     Connection connection = ConnectionUtil.getConnection();
     try{
     String sql = "update message set message_text = ? where message_id=?";
@@ -163,7 +163,7 @@ public int updateMessage(Integer messageId, String messageTxt){
 return 0;
 }
 
-public List<Message> getMessagesByUser(Integer accountId){
+public List<Message> retrieveMessageByUser(Integer accountId){
 Connection connection = ConnectionUtil.getConnection();
 List<Message> msgList = new ArrayList<Message>();
 try{

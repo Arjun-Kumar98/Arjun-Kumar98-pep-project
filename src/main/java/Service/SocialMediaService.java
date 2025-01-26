@@ -51,28 +51,28 @@ public Message createMessage(Message message){
 
 
 
-public List<Message> fetchAllMessages(){
-   return socialMediaDAO.retrieveMessage();
+public List<Message> retrieveAllMessages(){
+   return socialMediaDAO.retrieveAllMessages();
 }
 
-public Message fetchMessageById(int messageId){
+public Message retrieveMessageById(int messageId){
    return socialMediaDAO.retrieveMessageById(messageId);
 }
 
-public Message deleteMessageById(Integer messageId){
+public Message deleteMessageById(int messageId){
    Message message = socialMediaDAO.retrieveMessageById(messageId);
    if(message!=null){
-       socialMediaDAO.deleteMessage(messageId);
+       socialMediaDAO.deleteMessageById(messageId);
        return message;
 }
 return null;
 }
 
-public Message updateMessageById(Integer messageId,String messageTxt){
+public Message updateMessageById(int messageId,String messageTxt){
    if(messageTxt.length()>=1 && messageTxt.length()<=255){
    Message message = socialMediaDAO.retrieveMessageById(messageId);
    if(message!=null){
-      int updateMsg = socialMediaDAO.updateMessage(messageId, messageTxt);
+      int updateMsg = socialMediaDAO.updateMessageById(messageId, messageTxt);
       if(updateMsg>=1){
       message = socialMediaDAO.retrieveMessageById(messageId);
          return message;
@@ -85,7 +85,7 @@ public Message updateMessageById(Integer messageId,String messageTxt){
 }
 
 public List<Message> retrieveMessageByUser(int accountId){
-  return socialMediaDAO.getMessagesByUser(accountId);
+  return socialMediaDAO.retrieveMessageByUser(accountId);
 
 }
 
