@@ -3,44 +3,46 @@ import Model.Message;
 import Model.Account;
 import DAO.SocialMediaDAO;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 public class SocialMediaService {
-   private static final Logger logger = LoggerFactory.getLogger(SocialMediaService.class);
-
-SocialMediaDAO socialmediaDAO;
+SocialMediaDAO socialMediaDAO;
 
 public SocialMediaService(){
-   socialmediaDAO = new SocialMediaDAO();
+   socialMediaDAO = new SocialMediaDAO();
 } 
 
-public SocialMediaService(SocialMediaDAO socialmediaDAO){
-   this.socialmediaDAO = socialmediaDAO;
+public SocialMediaService(SocialMediaDAO socialMediaDAO){
+   this.socialMediaDAO = socialMediaDAO;
+}
+
+public int checkUserHelper(int userId){
+   int userCheck = socialMediaDAO.findUserId(userId);
+   return userCheck;
 }
 
 public Account addAccount(Account account){
 String username = account.getUsername();
 String password = account.getPassword();
 if(username.length()>=1&&password.length()>=4){
-String checker= socialmediaDAO.findUser(username);
-if(checker==null){
-return socialmediaDAO.registerUser(account);
+String userCheck = socialMediaDAO.findUser(username);
+if(userCheck==null){
+return socialMediaDAO.registerUser(account);
 }
 }
 return null;
 }
 
 public Account accountLogin(Account account){
-   return socialmediaDAO.loginUser(account);
+   return socialMediaDAO.loginUser(account);
 }
 
 public Message createMessage(Message message){
    String messageTxt = message.getMessage_text();
    if(messageTxt.length()>=1&&messageTxt.length()<=255){
-       int checker = socialmediaDAO.findUserId(message.getPosted_by());
-       if(checker!=0){
-         return socialmediaDAO.createMessage(message);
+       int userCheck = checkUserHelper(message.getPosted_by());
+       if(userCheck!=0){
+         return socialMediaDAO.createMessage(message);
        }
        return null;
    }
@@ -50,17 +52,17 @@ public Message createMessage(Message message){
 
 
 public List<Message> fetchAllMessages(){
-   return socialmediaDAO.retrieveMessage();
+   return socialMediaDAO.retrieveMessage();
 }
 
 public Message fetchMessageById(int messageId){
-   return socialmediaDAO.retrieveMessageById(messageId);
+   return socialMediaDAO.retrieveMessageById(messageId);
 }
 
 public Message deleteMessageById(Integer messageId){
-   Message message = socialmediaDAO.retrieveMessageById(messageId);
+   Message message = socialMediaDAO.retrieveMessageById(messageId);
    if(message!=null){
-       socialmediaDAO.deleteMessage(messageId);
+       socialMediaDAO.deleteMessage(messageId);
        return message;
 }
 return null;
@@ -68,11 +70,11 @@ return null;
 
 public Message updateMessageById(Integer messageId,String messageTxt){
    if(messageTxt.length()>=1 && messageTxt.length()<=255){
-   Message message = socialmediaDAO.retrieveMessageById(messageId);
+   Message message = socialMediaDAO.retrieveMessageById(messageId);
    if(message!=null){
-      int checker = socialmediaDAO.updateMessage(messageId, messageTxt);
-      if(checker>=1){
-      message = socialmediaDAO.retrieveMessageById(messageId);
+      int updateMsg = socialMediaDAO.updateMessage(messageId, messageTxt);
+      if(updateMsg>=1){
+      message = socialMediaDAO.retrieveMessageById(messageId);
          return message;
       }else{
          return null;
@@ -83,7 +85,7 @@ public Message updateMessageById(Integer messageId,String messageTxt){
 }
 
 public List<Message> retrieveMessageByUser(int accountId){
-  return socialmediaDAO.getMessagesByUser(accountId);
+  return socialMediaDAO.getMessagesByUser(accountId);
 
 }
 

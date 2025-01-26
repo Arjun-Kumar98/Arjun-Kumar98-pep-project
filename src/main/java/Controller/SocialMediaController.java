@@ -100,7 +100,6 @@ public class SocialMediaController {
   }
 
   private void fetchMessageHandler(Context ctx) throws JsonProcessingException{
-    //String jsonString = ctx.body();
     ObjectMapper mapper = new ObjectMapper();
     Message messages = socialMediaService.fetchMessageById(Integer.valueOf(ctx.pathParam("message_id")));
     ctx.status(200);
