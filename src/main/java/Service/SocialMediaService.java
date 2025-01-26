@@ -83,4 +83,9 @@ public Message updateMessageById(Integer messageId,String messageTxt){
    return null;
 }
 
+public List<Message> retrieveMessageByUser(int accountId){
+  return socialmediaDAO.getMessagesByUser(accountId);
+
+}
+
 }

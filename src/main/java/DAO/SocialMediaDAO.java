@@ -164,8 +164,21 @@ public int updateMessage(Integer messageId, String messageTxt){
 return 0;
 }
 
-public List<Message> getMessages(Integer userId){
-
-return null;
+public List<Message> getMessagesByUser(Integer accountId){
+Connection connection = ConnectionUtil.getConnection();
+List<Message> msgList = new ArrayList<Message>();
+try{
+    String sql = "select * from message where posted_by=?";
+    PreparedStatement prepStmt = connection.prepareStatement(sql);
+    prepStmt.setInt(1,accountId);
+    ResultSet rs = prepStmt.executeQuery();
+    while(rs.next()){
+        Message messages = new Message(rs.getInt("message_id"),rs.getInt("posted_by"),rs.getString("message_text"),rs.getLong("time_posted_epoch"));
+        msgList.add(messages);
+    }}catch(SQLException e){
+        System.out.println(e.getMessage());
+    }
+return msgList;
 }
+
 }
