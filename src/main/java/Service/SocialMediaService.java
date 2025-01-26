@@ -22,15 +22,15 @@ public int checkUserHelper(int userId){
 }
 
 public Account addAccount(Account account){
-String username = account.getUsername();
-String password = account.getPassword();
-if(username.length()>=1&&password.length()>=4){
-String userCheck = socialMediaDAO.findUser(username);
+ String username = account.getUsername();
+ String password = account.getPassword();
+ if(username.length()>=1&&password.length()>=4){
+  String userCheck = socialMediaDAO.findUser(username);
 if(userCheck==null){
-return socialMediaDAO.registerUser(account);
+  return socialMediaDAO.registerUser(account);
 }
 }
-return null;
+ return null;
 }
 
 public Account accountLogin(Account account){
@@ -38,9 +38,9 @@ public Account accountLogin(Account account){
 }
 
 public Message createMessage(Message message){
-   String messageTxt = message.getMessage_text();
-   if(messageTxt.length()>=1&&messageTxt.length()<=255){
-       int userCheck = checkUserHelper(message.getPosted_by());
+ String messageTxt = message.getMessage_text();
+if(messageTxt.length()>=1&&messageTxt.length()<=255){
+   int userCheck = checkUserHelper(message.getPosted_by());
        if(userCheck!=0){
          return socialMediaDAO.createMessage(message);
        }

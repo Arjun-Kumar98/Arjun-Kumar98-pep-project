@@ -84,10 +84,10 @@ public class SocialMediaController {
     Message message = mapper.readValue(jsonString,Message.class);
     Message messageCheck = socialMediaService.createMessage(message);
     if(messageCheck==null){
-      ctx.status(400);
+       ctx.status(400);
     }else{
-      ctx.status(200);
-      ctx.json(mapper.writeValueAsString(messageCheck));
+       ctx.status(200);
+       ctx.json(mapper.writeValueAsString(messageCheck));
     }
   }
 
@@ -96,7 +96,6 @@ public class SocialMediaController {
     List<Message> messageList = socialMediaService.retrieveAllMessages();
     ctx.status(200);
     ctx.json(mapper.writeValueAsString(messageList));
-
   }
 
   private void retrieveMessageByIdHandler(Context ctx) throws JsonProcessingException{
@@ -104,9 +103,8 @@ public class SocialMediaController {
     Message msg = socialMediaService.retrieveMessageById(Integer.parseInt(ctx.pathParam("message_id")));
     ctx.status(200);
     if(msg!=null){
-    ctx.json(mapper.writeValueAsString(msg));
+     ctx.json(mapper.writeValueAsString(msg));
     }
-
   }
 
   private void deleteMessageByIdHandler(Context ctx) throws JsonProcessingException{
@@ -131,12 +129,13 @@ public class SocialMediaController {
       ctx.json(mapper.writeValueAsString(message));
     }
   }
-    private void retrieveMessageByUserHandler(Context ctx) throws JsonProcessingException{
-       ObjectMapper mapper = new ObjectMapper();
-       int accountId = Integer.parseInt(ctx.pathParam("account_id"));
-       List<Message> msgList = socialMediaService.retrieveMessageByUser(accountId);
-       ctx.status(200);
-       if(msgList!=null){
+
+  private void retrieveMessageByUserHandler(Context ctx) throws JsonProcessingException{
+    ObjectMapper mapper = new ObjectMapper();
+    int accountId = Integer.parseInt(ctx.pathParam("account_id"));
+    List<Message> msgList = socialMediaService.retrieveMessageByUser(accountId);
+    ctx.status(200);
+    if(msgList!=null){
         ctx.json(mapper.writeValueAsString(msgList));
        }
     }
