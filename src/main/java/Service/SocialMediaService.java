@@ -47,6 +47,8 @@ public Message createMessage(Message message){
    return null;
 }
 
+
+
 public List<Message> fetchAllMessages(){
    return socialmediaDAO.retrieveMessage();
 }
@@ -56,7 +58,11 @@ public Message fetchMessageById(int messageId){
 }
 
 public Message deleteMessageById(Integer messageId){
-   return socialmediaDAO.deleteMessage(messageId);
+   Message message = socialmediaDAO.retrieveMessageById(messageId);
+   if(message!=null){
+       socialmediaDAO.deleteMessage(messageId);
+       return message;
 }
-
+return null;
+}
 }
