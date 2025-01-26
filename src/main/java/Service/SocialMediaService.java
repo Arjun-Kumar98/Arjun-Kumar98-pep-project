@@ -2,6 +2,7 @@ package Service;
 import Model.Message;
 import Model.Account;
 import DAO.SocialMediaDAO;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,5 +45,9 @@ public Message createMessage(Message message){
        return null;
    }
    return null;
+}
+
+public List<Message> fetchAllMessages(){
+   return socialmediaDAO.retrieveMessage();
 }
 }

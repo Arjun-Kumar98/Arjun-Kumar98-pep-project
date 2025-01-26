@@ -2,6 +2,7 @@ package DAO;
 import Model.Account;
 import Model.Message;
 import java.util.List;
+import java.util.ArrayList;
 import java.sql.*;
 import Util.ConnectionUtil;
 public class SocialMediaDAO {
@@ -103,8 +104,20 @@ public Message createMessage(Message message){
     
 
 public List<Message> retrieveMessage(){
-
-return null;
+Connection connection = ConnectionUtil.getConnection();
+List<Message> messageList = new ArrayList<Message>();
+try{
+    String sql = "select * from message";
+    PreparedStatement prepStmt = connection.prepareStatement(sql);
+    ResultSet rs = prepStmt.executeQuery();
+    while(rs.next()){
+    Message messages = new Message(rs.getInt("message_id"),rs.getInt("posted_by"),rs.getString("message_text"),rs.getLong("time_posted_epoch"));
+    messageList.add(messages);
+    }
+}catch(SQLException e){
+    System.out.println(e.getMessage());
+}
+return messageList;
 }
 
 public void deleteMessage(Integer messageId){
