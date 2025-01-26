@@ -72,7 +72,6 @@ public Message updateMessageById(Integer messageId,String messageTxt){
    if(message!=null){
       int checker = socialmediaDAO.updateMessage(messageId, messageTxt);
       if(checker>=1){
-       // message.setMessage_text(messageTxt);
       message = socialmediaDAO.retrieveMessageById(messageId);
          return message;
       }else{
