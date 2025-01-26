@@ -151,8 +151,8 @@ public int updateMessageById(Integer messageId, String messageTxt){
     try{
      String sql = "update message set message_text = ? where message_id=?";
      PreparedStatement prepStmt = connection.prepareStatement(sql);
-     prepStmt.setInt(2,messageId);
      prepStmt.setString(1,messageTxt);
+     prepStmt.setInt(2,messageId);
      int resultCheck = prepStmt.executeUpdate();
     if(resultCheck>=1){
         return resultCheck;
