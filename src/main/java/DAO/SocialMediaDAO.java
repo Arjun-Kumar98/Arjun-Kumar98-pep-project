@@ -147,8 +147,21 @@ try{
 }
 }
 
-public Message updateMessage(Message message){
-return null;
+public int updateMessage(Integer messageId, String messageTxt){
+    Connection connection = ConnectionUtil.getConnection();
+    try{
+    String sql = "update message set message_text = ? where message_id=?";
+    PreparedStatement prepStmt = connection.prepareStatement(sql);
+    prepStmt.setInt(2,messageId);
+    prepStmt.setString(1,messageTxt);
+    int resultCheck = prepStmt.executeUpdate();
+    if(resultCheck>=1){
+        return resultCheck;
+    }
+    }catch(SQLException e){
+        System.out.println(e.getMessage());
+    }
+return 0;
 }
 
 public List<Message> getMessages(Integer userId){

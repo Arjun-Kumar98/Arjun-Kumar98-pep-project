@@ -66,5 +66,21 @@ public Message deleteMessageById(Integer messageId){
 return null;
 }
 
+public Message updateMessageById(Integer messageId,String messageTxt){
+   if(messageTxt.length()>=1 && messageTxt.length()<=255){
+   Message message = socialmediaDAO.retrieveMessageById(messageId);
+   if(message!=null){
+      int checker = socialmediaDAO.updateMessage(messageId, messageTxt);
+      if(checker>=1){
+       // message.setMessage_text(messageTxt);
+      message = socialmediaDAO.retrieveMessageById(messageId);
+         return message;
+      }else{
+         return null;
+      }
+   }
+}
+   return null;
+}
 
 }
