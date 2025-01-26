@@ -33,7 +33,7 @@ public String findUser(String userName){
     try{
    String sql = "select username from account where username=?";
    PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
+   preparedStatement.setString(1,userName);
   ResultSet rs = preparedStatement.executeQuery();
  
  while(rs.next()){
@@ -44,6 +44,23 @@ public String findUser(String userName){
         System.out.println(e.getMessage());
     }
     return null;
+}
+
+public int findUserId(Integer userId){
+    Connection connection = ConnectionUtil.getConnection();
+    try{
+        String sql = "select account_id from account where account_id=?";
+        PreparedStatement prepStmt = connection.prepareStatement(sql);
+        prepStmt.setInt(1,userId);
+        ResultSet rs = prepStmt.executeQuery();
+        while(rs.next()){
+            int accountId = rs.getInt("account_id");
+            return accountId;
+        }
+    }catch(SQLException e){
+        System.out.println(e.getMessage());
+    }
+    return 0;
 }
 
 public Account loginUser(Account account){
@@ -65,9 +82,25 @@ return null;
 }
 
 public Message createMessage(Message message){
-
-return null;
-}
+ Connection connection = ConnectionUtil.getConnection();
+ try{
+        String sql = "insert into message(posted_by,message_text,time_posted_epoch) values(?,?,?)";
+         PreparedStatement psT = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+         psT.setInt(1,message.getPosted_by());
+         psT.setString(2,message.getMessage_text());
+         psT.setLong(3,message.getTime_posted_epoch());
+         psT.executeUpdate();
+         ResultSet rsKey = psT.getGeneratedKeys();
+         if(rsKey.next()){
+            int messageId = rsKey.getInt(1);
+           return new Message(messageId,message.getPosted_by(),message.getMessage_text(),message.getTime_posted_epoch());
+        }}
+        catch(SQLException e){
+    System.out.println(e.getMessage());
+       }
+    return null;
+    }
+    
 
 public List<Message> retrieveMessage(){
 
